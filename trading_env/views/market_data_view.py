@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
+from trading_env.serializers.asset import AssetSerializer
 from trading_env.utils.market_data import fetch_market_price
 
 

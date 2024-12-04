@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models.asset import Asset
+from trading_env.models import Asset
 
 
 class AssetSerializer(serializers.ModelSerializer):

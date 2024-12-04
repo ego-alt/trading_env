@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from models.transaction import Transaction
+from trading_env.models import Transaction
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ['user', 'asset', 'action', 'quantity', 'price_at_transaction', 'timestamp']
+        fields = ["user", "asset", "action", "quantity", "price_at_transaction", "timestamp"]
 
