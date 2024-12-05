@@ -15,7 +15,7 @@ class TransactionHandler:
         quantity = quantity.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         asset = Asset.objects.get(ticker=ticker)
         asset.update_price()
-        price = Decimal(str(asset.current_price))
+        price = asset.current_price
         
         tot_cost = quantity * price
         tot_cost = tot_cost.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)

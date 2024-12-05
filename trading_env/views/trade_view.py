@@ -22,3 +22,22 @@ def buy_view(request):
         return JsonResponse({"message": f"Successfully purchased {quantity} of {ticker}."})
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=404)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def sell_view(request):
+    user = request.user
+    data = request.data
+
+    ticker = data.get("ticker")
+    quantity = data.get("quantity")
+    if not ticker or not quantity:
+        return JsonResponse({"error": "Required fields ticker and quantity are missing."}, status=400)
+
+    try: 
+        handler = TransactionHandler(user=user)
+        handler.sell_asset(ticker, quantity)
+        return JsonResponse({"message": f"Successfully sold {quantity} of {ticker}."})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=404)

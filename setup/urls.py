@@ -20,7 +20,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from trading_env.views.market_data_view import market_price_view
 from trading_env.views.portfolio_view import portfolio_view
-from trading_env.views.trade_view import buy_view
+from trading_env.views.trade_view import buy_view, sell_view
 
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
     path("user/portfolio/", portfolio_view, name="portfolio"),
     path("user/buy/", buy_view, name="buy"),
+    path("user/sell/", sell_view, name="sell"),
     path("market-price/<str:ticker>/", market_price_view, name="market_price"),
 ]

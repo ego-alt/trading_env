@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from trading_env.utils.market_data import fetch_market_price 
 
@@ -21,5 +22,5 @@ class Asset(models.Model):
     def update_price(self):
         new_price = fetch_market_price(self.ticker)
         if new_price is not None:
-            self.current_price = new_price
+            self.current_price = Decimal(str(new_price))
             self.save()
