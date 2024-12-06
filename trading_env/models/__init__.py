@@ -1,3 +1,5 @@
 from .asset import Asset
-from .transaction import Transaction
+from .order import Order
 from .portfolio import Portfolio, PortfolioAsset
+from .price_history import PriceHistory
+from .transaction import Transaction
