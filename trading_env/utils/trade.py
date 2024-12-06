@@ -1,7 +1,7 @@
 from decimal import Decimal, ROUND_HALF_UP
-from trading_env.models import Asset, Portfolio, PortfolioAsset, Transaction
-from trading_env.models.transaction import ActionChoices
 
+from trading_env.models import Asset, Order, Portfolio, PortfolioAsset
+from trading_env.models.choices import OrderStatusChoices, OrderTypeChoices
 
 
 class TransactionHandler:
@@ -14,7 +14,6 @@ class TransactionHandler:
         quantity = Decimal(quantity)
         quantity = quantity.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         asset = Asset.objects.get(ticker=ticker)
-        asset.update_price()
         price = asset.current_price
         
         tot_cost = quantity * price
@@ -36,21 +35,22 @@ class TransactionHandler:
         portfolio_asset.save()
 
         # Create transaction record
-        Transaction.objects.create(
+        Order.objects.create(
             user=self.user,
-            asset=asset,
-            action=ActionChoices.BUY,
+            asset=asset,    
+            status=OrderStatusChoices.CLOSED,
+            order_type=OrderTypeChoices.BUY,
             quantity=quantity,
             price_at_transaction=price
         )
         return True
+
 
     def sell_asset(self, ticker: str, quantity: str) -> bool:
         """Trigger the sell order for an asset."""
         quantity = Decimal(quantity)
         quantity = quantity.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         asset = Asset.objects.get(ticker=ticker)
-        asset.update_price()
         price = asset.current_price
 
         try:
@@ -75,10 +75,11 @@ class TransactionHandler:
         self.portfolio.save()
 
         # Create transaction record
-        Transaction.objects.create(
+        Order.objects.create(
             user=self.user,
-            asset=asset,
-            action=ActionChoices.SELL,
+            asset=asset,    
+            status=OrderStatusChoices.CLOSED,
+            order_type=OrderTypeChoices.SELL,
             quantity=quantity,
             price_at_transaction=price
         )
