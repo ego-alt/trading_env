@@ -30,13 +30,13 @@ def portfolio_assets_view(request):
     
     portfolio_assets = []
     for portfolio_asset in portfolio.assets.all():
-        current_price = portfolio_asset.asset.current_price # Need to dynamically access current price
         quantity = portfolio_asset.quantity
+        value = portfolio_asset.value # Need to dynamically access value
         portfolio_assets.append({
             "ticker": portfolio_asset.asset.ticker,
             "name": portfolio_asset.asset.name,
             "quantity": quantity,
-            "value": current_price * quantity
+            "value": value
         })
     return JsonResponse({"assets": portfolio_assets}, status=200)
 
