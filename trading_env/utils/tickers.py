@@ -1,12 +1,18 @@
+from trading_env.models.choices import AssetTypeChoices
+
 
 STOCK_TICKERS = [
-    "AAPL",
-    "AMZN",
-    "GOOG",
-    "MSFT",
-    "NFLX",
-    "NVDA",
-    "TSLA",
+    ("AAPL", "Apple"),
+    ("AMZN", "Amazon"),
+    ("GOOG", "Google"),
+    ("MSFT", "Microsoft"),
+    ("NFLX", "Netflix"),
+    ("NVDA", "Nvidia"),
+    ("SPOT", "Spotify"),
+    ("TSLA", "Tesla"),
 ]
 
-ALL_TICKERS = STOCK_TICKERS
+# Register different tickers under their asset types
+TICKERS = {
+    AssetTypeChoices.STOCK: STOCK_TICKERS
+}

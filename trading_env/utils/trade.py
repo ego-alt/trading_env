@@ -1,4 +1,4 @@
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal
 
 from trading_env.models import Asset, Order, Portfolio, PortfolioAsset
 from trading_env.models.choices import OrderStatusChoices, OrderTypeChoices
@@ -11,13 +11,11 @@ class TransactionHandler:
 
     def buy_asset(self, ticker: str, quantity: str) -> bool:
         """Trigger the buy order for an asset."""
-        quantity = Decimal(quantity)
-        quantity = quantity.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        quantity = round(Decimal(quantity), 2)
         asset = Asset.objects.get(ticker=ticker)
         price = asset.current_price
         
-        tot_cost = quantity * price
-        tot_cost = tot_cost.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        tot_cost = round(quantity * price, 2)
         if tot_cost > self.portfolio.cash_balance:
             raise ValueError("Not enough funds.")
 
@@ -48,8 +46,7 @@ class TransactionHandler:
 
     def sell_asset(self, ticker: str, quantity: str) -> bool:
         """Trigger the sell order for an asset."""
-        quantity = Decimal(quantity)
-        quantity = quantity.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        quantity = round(Decimal(quantity), 2)
         asset = Asset.objects.get(ticker=ticker)
         price = asset.current_price
 
@@ -69,8 +66,7 @@ class TransactionHandler:
             portfolio_asset.save()
 
         # Add proceeds to portfolio funds
-        tot_proceeds = quantity * price
-        tot_proceeds = tot_proceeds.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        tot_proceeds = round(quantity * price, 2)
         self.portfolio.cash_balance += tot_proceeds
         self.portfolio.save()
 

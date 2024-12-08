@@ -1,17 +1,15 @@
-import yfinance as yf
-
-from .tickers import ALL_TICKERS
-
+from yahooquery import Ticker
 
 def fetch_market_price(ticker_name: str) -> float | None:
     """Retrieve current market price from Yahoo Finance"""
-    ticker = yf.Ticker(ticker_name)
-    return ticker.info.get("currentPrice", None)
+    ticker = Ticker(ticker_name).financial_data
+    return ticker[ticker_name].get("currentPrice", None)
 
 
-def fetch_all_market_prices() -> dict:
+def fetch_market_prices(ticker_names: list) -> dict:
     market_prices = {}
-    for ticker_name in ALL_TICKERS:
-        market_prices[ticker_name] = fetch_market_price(ticker_name)
+    ticker_list = Ticker(ticker_names).financial_data
+    for ticker_name, data in ticker_list.items():
+        market_prices[ticker_name] = data.get("currentPrice", None)
     return market_prices
 
