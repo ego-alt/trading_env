@@ -2,7 +2,7 @@ from celery import shared_task
 import logging
 import time
 
-from .models import Asset, AssetPriceHistory, Portfolio, PortfolioAsset, PortfolioHistory
+from .models import Asset, Portfolio, PortfolioAsset, PortfolioHistory
 
 logger = logging.getLogger(__name__)
 

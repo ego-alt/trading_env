@@ -137,8 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis as the broker
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # Redis as the result backend
+CELERY_BROKER_URL = 'redis://redis:6379/0'  # Redis as the broker
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'  # Redis as the result backend
 
 
 # Logging
